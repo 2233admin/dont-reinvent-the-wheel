@@ -161,8 +161,9 @@ Several of these do things this skill does not. Details and dates are in
 - PyPI has no search API. The `pypi` source only checks whether a package is named after the
   term.
 - Package registries are poor at concept queries. Use them for library-shaped needs.
-- What is new here is small: the snowball step and the stop counter. If one of the projects
-  above adds them, use that project.
+- Most of this skill is other people's ideas, put together so they can be used as one
+  thing. That is on purpose. The parts we added ourselves are the snowball step and the
+  stop counter.
 
 ## Development
 
