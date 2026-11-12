@@ -27,6 +27,10 @@ dont-reinvent-the-wheel spends its effort where that problem lives:
 4. **Leave a dated report** in `docs/prior-art/`, with the terms and sources used, so the
    next survey of the topic starts from this one.
 
+The survey is not a gate. It is meant to run alongside a first rough prototype, and what
+the prototype teaches you (the terms, the libraries, the error messages) goes back in as
+search terms.
+
 It ends in one of four verdicts per part of the need: **Adopt, Extend, Compose, Build**.
 Build requires completing the sentence "Existing X cannot do ___ because ___."
 

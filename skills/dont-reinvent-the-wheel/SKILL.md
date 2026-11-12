@@ -1,6 +1,6 @@
 ---
 name: dont-reinvent-the-wheel
-description: Find what already exists before building something new, especially when you don't know what the existing thing is called. Use before starting any new project, tool, library, plugin, agent skill or sizeable feature, and whenever the user asks "does this already exist", "is there a tool/library for", "prior art", "survey existing work", "what's out there", "don't reinvent the wheel", 有没有现成的, 别重复造轮子, 查轮子, 调研一下已有的, 已有工作调查. Expands the need into the names other people use for it, finds a seed project, snowballs from the seed to its neighbours, stops when the search goes quiet, and writes a dated report ending in Adopt / Extend / Compose / Build. Not for bug fixes, integrating a library that is already chosen, or changes that take under an hour.
+description: Find what already exists before building something new, especially when you don't know what the existing thing is called. Use when starting any new project, tool, library, plugin, agent skill or sizeable feature (before it, or alongside a first rough prototype), and whenever the user asks "does this already exist", "is there a tool/library for", "prior art", "survey existing work", "what's out there", "don't reinvent the wheel", 有没有现成的, 别重复造轮子, 查轮子, 调研一下已有的, 已有工作调查. Expands the need into the names other people use for it, finds a seed project, snowballs from the seed to its neighbours, stops when the search goes quiet, and writes a dated report ending in Adopt / Extend / Compose / Build. Not for bug fixes, integrating a library that is already chosen, or changes that take under an hour.
 compatibility: Needs web search or network access from a shell. scripts/scout.py needs Python 3.8+ (standard library only); every step can also be done by hand with web search.
 ---
 
@@ -23,6 +23,22 @@ dated report in the repo, so the next survey of the same topic starts from this 
   week to build.
 
 A "search" is one `scout.py` call or one web search.
+
+## Survey alongside the prototype, not instead of it
+
+This survey is not a gate. If a rough prototype is cheap, start it now and run the survey at
+the same time; nobody should sit waiting for a report before they are allowed to try
+something. The two feed each other:
+
+- Half an hour of building teaches the vocabulary. The error messages, library names and
+  terms that turn up while prototyping are usually the names the existing projects use, so
+  add them to step 2 and search again.
+- The survey says which of several prototypes is worth keeping. A throwaway that taught you
+  something is not wasted when the verdict comes back Adopt.
+
+Finish the survey before the point where stopping gets expensive: before the prototype is
+turned into a repository other people depend on, before a week has gone into it, before it
+is announced. Up to then, build and search in parallel.
 
 ## 0. Frame the need
 
