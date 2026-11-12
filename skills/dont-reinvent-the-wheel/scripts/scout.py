@@ -6,6 +6,7 @@
     scout.py related OWNER/REPO [--readme-file PATH] [--state FILE] [--all] [--json]
     scout.py keep --state FILE KEY [KEY ...]
     scout.py status --state FILE
+    scout.py check
 
 `search` sends every term to every channel in parallel and merges the results
 into one candidate list; a candidate that several terms or channels point at
@@ -52,7 +53,7 @@ _RESERVED = {
 _REPO_URL = re.compile(r"github\.com[/:]([A-Za-z0-9][A-Za-z0-9-]*)/([A-Za-z0-9._-]+)", re.I)
 _RELATED_HEADING = re.compile(
     r"alternativ|related|similar|compar|see also|inspir|prior art|acknowledg|credit"
-    r"|\bvs\b|other (projects|tools)|替代|类似|相关|对比|比较|同类|致谢|参考|灵感",
+    r"|\bvs\b|other (projects|tools)|borrow|替代|类似|相关|对比|比较|同类|致谢|参考|灵感|借鉴",
     re.I,
 )
 
@@ -235,6 +236,22 @@ def run_search(terms: list[str], channels: list[str], limit: int):
     for c in ranked:
         c.pop("best", None)
     return ranked, sorted(errors)
+
+
+def run_check() -> list[tuple[str, str]]:
+    """One tiny query per channel, to see which sources are reachable from here."""
+    probes = {"github": "test", "hn": "test", "npm": "test", "crates": "test", "pypi": "requests"}
+    results = []
+    with cf.ThreadPoolExecutor(max_workers=5) as pool:
+        futures = {pool.submit(SEARCHERS[ch], probes[ch], 1): ch for ch in CHANNELS}
+        for fut in cf.as_completed(futures):
+            ch = futures[fut]
+            try:
+                fut.result()
+                results.append((ch, "ok"))
+            except Exception as exc:
+                results.append((ch, _describe_error(exc)))
+    return sorted(results, key=lambda r: CHANNELS.index(r[0]))
 
 
 # --- snowballing from a seed -------------------------------------------------
@@ -421,8 +438,16 @@ def main(argv=None) -> int:
     k.add_argument("keys", nargs="+", help="OWNER/REPO, a GitHub URL, or a key such as npm:name")
     st = sub.add_parser("status", help="rounds so far, shortlist, and whether the search has gone quiet")
     st.add_argument("--state", required=True)
+    sub.add_parser("check", help="see which sources are reachable from here")
     args = ap.parse_args(argv)
 
+    if args.cmd == "check":
+        results = run_check()
+        for ch, state in results:
+            print(f"{ch:<7} {state}")
+        usable = [ch for ch, state in results if state == "ok"]
+        print("use: --channels " + ",".join(usable) if usable else "no source reachable; search by hand")
+        return 0
     if args.cmd == "keep":
         print(keep(args.state, args.keys))
         return 0

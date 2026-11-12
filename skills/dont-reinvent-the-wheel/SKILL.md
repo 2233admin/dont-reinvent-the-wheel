@@ -18,11 +18,18 @@ dated report in the repo, so the next survey of the same topic starts from this 
 
 ## Modes
 
+Match the effort to what is at stake. A survey that costs more than the thing it protects
+is ceremony.
+
+- **none**: a typo, a rename, a change that alters no behaviour. Don't run this skill.
 - **quick** (default): about 8 searches. For a feature or a utility.
-- **deep**: about 25 searches. For a new repository, or anything expected to take more than a
-  week to build.
+- **deep**: about 25 searches. For a new repository, a redesign of something others depend
+  on, or anything expected to take more than a week to build.
 
 A "search" is one `scout.py` call or one web search.
+
+If the user says to skip the survey, skip it, and say so in one line ("building without
+checking for an existing X") so the choice is on record.
 
 ## Survey alongside the prototype, not instead of it
 
@@ -62,7 +69,13 @@ Stop at the first hit that answers the question.
 2. This repo: grep modules, tests and docs for each part.
 3. The user's other repositories and earlier work, when reachable.
 4. Installed skills, MCP servers and plugins. Installing a second tool for a job an
-   installed one already does is the most common reinvention there is.
+   installed one already does is the most common reinvention there is. Search names and
+   descriptions, not just names:
+   `grep -rilE "keyword|synonym" ~/.claude/skills 2>/dev/null`
+   (that is Claude Code's directory; use whichever one this agent reads skills from).
+
+When the question is whether to replace something the user already has, what is at home is
+the baseline to compare against, not the answer. Keep going.
 
 ## 2. Name each part six ways
 
@@ -77,11 +90,26 @@ so write them into the reply where the user can see and correct them.
 - a known product that does it, plus `<product> alternative`
 - the first line an existing project's README would probably open with. Write that sentence
   and search for it; it is often closer to how projects describe themselves than any keyword.
+- the complaint. People describe a missing tool by the pain ("links keep rotting in our
+  docs"), and issue trackers and forum posts are written in those words.
+
+If the user already named a candidate, open that exact project first, then still look at two
+of its neighbours before concluding. A name the user happened to know is a seed, not a
+verdict.
 
 ## 3. Find a seed
 
 The goal is one to three projects that are clearly the same kind of thing. It is not a
-complete list; step 4 produces that.
+complete list; step 4 produces that. A hosted service or a commercial product counts as a
+candidate just as much as a repository does.
+
+First see which sources can actually be reached from here:
+
+```bash
+python3 scripts/scout.py check
+```
+
+Leave out the ones that fail and name them in the report. Then search:
 
 ```bash
 python3 scripts/scout.py search --state .prior-art/<topic>.json \
@@ -152,9 +180,20 @@ Drop candidates that fail on facts:
 - no commits for over a year and issues going unanswered
 - the wrong language, platform or runtime
 
+An abandoned project is still evidence. Find out why it stopped: the reason is often the
+thing that would stop a new attempt too.
+
 Read at most five of the rest. Reading means opening the README, one core source file, and
-the issue tracker to see what users complain about. For each, record which parts of the need
-it covers, what it lacks, and what adopting it would cost.
+the issue tracker to see what users complain about. For each, record:
+
+- which parts of the need it covers, and what it lacks
+- what adopting it costs: setup, money, and what data leaves the machine
+- what access it asks for: files, shell, network, credentials
+- how it gets updated once adopted
+
+For a skill, plugin or MCP server, read all of it before recommending it. It will run with
+the agent's permissions, so look for shell commands, network calls and credential handling
+that the description doesn't mention.
 
 Stars and downloads help order the reading list. They do not decide anything: popular
 projects get abandoned, and a 30-star project can be the exact fit.
@@ -169,9 +208,21 @@ One line per part.
 | **Extend** | The core is right and the gap can be closed with a plugin, a fork or a PR upstream. |
 | **Compose** | No single project does it, but the parts exist. Write only the glue. |
 | **Build** | You can complete this sentence with facts: "Existing X cannot do ___ because ___." |
+| **Keep** | The question was whether to replace something you already have, and nothing found does the job better. |
 
 A Build verdict without that sentence is an Adopt or an Extend. The sentence has to name the
-closest candidate and a gap seen while reading it, not a guess from its description.
+closest candidate and a gap seen while reading it, not a guess from its description. Good
+reasons to rule a candidate out are ones you can point at: it only works after patching its
+internals, the glue would be as large as the thing itself, or it fails on licence,
+maintenance or security. A Build verdict also says roughly how big the thing is and what
+will need maintaining afterwards.
+
+For authentication, cryptography and payments, the bar for Build is much higher. Mistakes
+there are expensive and don't show up when the code runs.
+
+For an Adopt or Extend, write down the source, the version, the date, and how it will be
+updated. Without that, nobody will know in three months what was installed or where it came
+from.
 
 "To learn how it works" and "because it's fun" are legitimate reasons to build. Write them
 down as the reason; don't dress them up as a gap in the field.

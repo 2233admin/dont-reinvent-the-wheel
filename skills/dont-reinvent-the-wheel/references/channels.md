@@ -8,7 +8,9 @@ everywhere mostly adds noise.
 | a library or SDK | the registry for the language (`npm`, `crates`, `pypi`), `github` | the registry page's "dependents", the project's docs |
 | a CLI or developer tool | `github`, `hn` | awesome-lists for the language or domain |
 | an app or product | `hn`, web search for `<category> open source`, `<known product> alternative` | Product Hunt, AlternativeTo |
-| an agent skill, MCP server or plugin | what is installed locally, then skill and MCP directories | `github` with `SKILL.md` or `mcp server` in the term |
+| an agent skill, MCP server or plugin | what is installed locally, then skill and MCP directories (see below) | `github` with `SKILL.md` or `mcp server` in the term |
+| a hosted service | web search for `<category> SaaS`, `<known product> alternative`, pricing pages | `hn`, AlternativeTo |
+| a pattern or a snippet, not a project | code search: grep.app, GitHub code search | the library's own docs (Context7 or the docs site) |
 | a method or algorithm | web search, arXiv, Papers with Code | the reference implementation's repository |
 | a dataset or model | Hugging Face, Kaggle | the paper that introduced it |
 
@@ -22,6 +24,21 @@ everywhere mostly adds noise.
   "idea validation" returns whatever mentions those two words.
 - `pypi` — PyPI offers no search API. This channel only checks whether a package is *named*
   after the term. A miss means nothing; for Python libraries use `github` or web search.
+
+## Agent skills, plugins and MCP servers
+
+These have their own shelves, and the shelves change fast. Treat this list as places to
+try, and check that each still exists before relying on it.
+
+- what is already installed: grep the names *and descriptions* of local skills
+- the `skills` CLI and its directory at skills.sh
+- first-party collections such as github.com/anthropics/skills
+- awesome-lists for agent skills and for MCP servers
+- GitHub code search: `path:**/SKILL.md <keyword>`
+- MCP registries and directories
+
+Directory listings describe a skill in one line and are often out of date. Open the
+SKILL.md itself before writing anything about what it does.
 
 ## Chinese-language sources
 
@@ -57,3 +74,7 @@ From any one relevant project:
   Follow it.
 - A directory listing or a search snippet is a lead. Open the project itself before writing
   anything about what it does.
+- To read one skill or one package inside a large monorepo, fetch that folder only (a sparse
+  checkout, or the hosting site's file API). Cloning the whole repository is slow and often
+  times out. Take the entire folder, though: a SKILL.md usually points at scripts and
+  references beside it.
