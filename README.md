@@ -40,7 +40,7 @@ them all, and it took four rounds of searching to turn them up.
    next survey of the topic starts from this one.
 
 Steps 2 and 3 are the part we built. The rest is assembled from ideas other skills had
-first; see [Borrowed from](#borrowed-from).
+first; they are credited in [the survey](docs/prior-art/dont-reinvent-the-wheel.md).
 
 ## What you get back
 
@@ -117,39 +117,6 @@ python3 scripts/scout.py status  --state $S                     # has the search
 
 Stars and downloads are shown but never used for ranking. A source that fails is reported
 as not searched, never as empty. Set `GITHUB_TOKEN` to raise GitHub's search rate limit.
-
-## Borrowed from
-
-This skill would be a poor advertisement for itself if it had been written from scratch.
-After the first draft we read twelve similar projects and took what they did better. Ideas
-only; no text was copied.
-
-| Idea | From |
-|---|---|
-| Split the need into parts; Build carries the burden of proof; name what rules a candidate out; record the terms searched | [search-first](https://github.com/shimo4228/search-first) |
-| Size the survey to what is at stake; search the complaint, not just the name; open a named candidate and still check two neighbours; the Keep verdict; record source, version and update path; check what access a candidate asks for | [dont-reinvent](https://github.com/LucioLiu/dont-reinvent) |
-| Check which sources are reachable first; the Compose verdict | [search-first](https://github.com/affaan-m/everything-claude-code) in everything-claude-code |
-| Grep installed skills by description; read a skill's commands before recommending it | [skill-scout](https://github.com/affaan-m/everything-claude-code) |
-| Hosted services count as candidates; a higher bar for auth, crypto and payments | [programming-advisor](https://github.com/gaupoit/programming-advisor) |
-| A failed source is not an empty one; "read" and "seen" are different claims | [prior-work-retrieval](https://github.com/daymade/claude-code-skills) |
-| Say so when little was found; stop at the verdict | [prior-art](https://github.com/bendrucker/claude) |
-| Ask why abandoned projects stopped | [research](https://github.com/MrToxy/claude-skills) |
-| Where to look for a code pattern, as opposed to a project | [librarian](https://github.com/roerohan/skills) |
-| Several sources in parallel | [idea-reality-mcp](https://github.com/mnemox-ai/idea-reality-mcp) |
-
-## Alternatives
-
-Several of these do things this skill does not. Details and dates are in
-[the survey](docs/prior-art/dont-reinvent-the-wheel.md).
-
-| Project | Use it instead when |
-|---|---|
-| [search-first](https://github.com/shimo4228/search-first) | You already know what to search for and need a rigorous adopt-or-build decision. Its verdict rules are stricter than ours. The two work well together: this skill to find, search-first to decide. |
-| [dont-reinvent](https://github.com/LucioLiu/dont-reinvent) | The thing you are about to make is itself a skill or a reusable team capability, and you want it registered and kept up to date afterwards. Note its noncommercial licence. |
-| [prior-work-retrieval](https://github.com/daymade/claude-code-skills) | The question is "have *we* done this before?" — your own code, documents and past conversations. |
-| [programming-advisor](https://github.com/gaupoit/programming-advisor) | You want a build-versus-buy cost comparison and an integration plan. |
-| [idea-reality-mcp](https://github.com/mnemox-ai/idea-reality-mcp) | You want a quick score for how crowded an idea is. Also usable as this skill's first pass. |
-| [AutoSearch](https://github.com/0xmariowu/autosearch) | You need reach into many sources, including Chinese-language ones. A search backend this skill can sit on top of. |
 
 ## Limits
 

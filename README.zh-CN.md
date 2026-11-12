@@ -30,7 +30,7 @@
 4. **先读，再下结论。** 最多精读五个：README、一个核心源文件、issue 区、它要哪些权限、以后怎么更新。
 5. **留一份带日期的报告。** 写到 `docs/prior-art/`，记下用过的词和来源，下次查同一个题目从这里接着查。
 
-第 2、3 步是我们自己做的。其余部分是从别的 skill 借来的想法，见[借鉴来源](#借鉴来源)。
+第 2、3 步是我们自己做的。其余部分是从别的 skill 借来的想法，出处都记在[调查报告](docs/prior-art/dont-reinvent-the-wheel.md)里。
 
 ## 你会得到什么
 
@@ -97,36 +97,6 @@ python3 scripts/scout.py status  --state $S                     # 搜索安静�
 | `status` | 已经搜了几轮、名单里有谁、名单是否连续两轮没变 |
 
 star 和下载量只显示，不参与排序。某个来源请求失败时，会明确写“没有搜到这个来源”，不会当成“没有结果”。设置 `GITHUB_TOKEN` 可以提高 GitHub 搜索的频率上限。
-
-## 借鉴来源
-
-一个叫“别重复造轮子”的 skill 如果是从零写的，就太没有说服力了。初稿写完后我们通读了十二个同类项目，把它们做得更好的地方拿了过来。只借想法，没有复制任何文字。
-
-| 想法 | 来自 |
-|---|---|
-| 把需求拆成零件；Build 要自己举证；说清楚每个候选为什么不行；记录搜过的词 | [search-first](https://github.com/shimo4228/search-first) |
-| 调查力度和风险相称；除了名字还要搜“抱怨”；用户点名的候选也要再看两个邻居；Keep 结论；记录来源、版本和更新方式；检查候选要哪些权限 | [dont-reinvent](https://github.com/LucioLiu/dont-reinvent) |
-| 先确认哪些来源连得上；Compose 结论 | everything-claude-code 里的 [search-first](https://github.com/affaan-m/everything-claude-code) |
-| 按描述搜已安装的 skill；推荐一个 skill 之前先读它会执行什么命令 | [skill-scout](https://github.com/affaan-m/everything-claude-code) |
-| 托管服务也算候选；认证、加密、支付这几类自己造的门槛更高 | [programming-advisor](https://github.com/gaupoit/programming-advisor) |
-| 来源失败不等于没有结果；“读过”和“见过”是两种说法 | [prior-work-retrieval](https://github.com/daymade/claude-code-skills) |
-| 找到的少就照实说少；只出结论，不替用户动手 | [prior-art](https://github.com/bendrucker/claude) |
-| 弃坑的项目要问一句为什么停了 | [research](https://github.com/MrToxy/claude-skills) |
-| 要找的是一段写法而不是一个项目时该去哪搜 | [librarian](https://github.com/roerohan/skills) |
-| 多个来源并行查 | [idea-reality-mcp](https://github.com/mnemox-ai/idea-reality-mcp) |
-
-## 同类项目
-
-下面几个项目各有这个 skill 没有的东西。细节和日期见[调查报告](docs/prior-art/dont-reinvent-the-wheel.md)。
-
-| 项目 | 什么时候该用它 |
-|---|---|
-| [search-first](https://github.com/shimo4228/search-first) | 已经知道该搜什么，需要一个严格的“用现成的还是自己造”的决定。它的判定规则比我们严。两者可以配合：这个 skill 负责找，search-first 负责定。 |
-| [dont-reinvent](https://github.com/LucioLiu/dont-reinvent) | 你要做的东西本身是一个 skill 或团队里可复用的能力，而且希望装完之后有登记、能更新。注意它是非商业许可证。 |
-| [prior-work-retrieval](https://github.com/daymade/claude-code-skills) | 问题是“我们自己以前做过没有”：自己的代码、文档、历史对话。 |
-| [programming-advisor](https://github.com/gaupoit/programming-advisor) | 想要一份“自己造还是买现成的”成本对比，以及选定之后的接入步骤。 |
-| [idea-reality-mcp](https://github.com/mnemox-ai/idea-reality-mcp) | 想快速得到一个“这个想法有多挤”的分数。也可以当这个 skill 的第一轮搜索。 |
-| [AutoSearch](https://github.com/0xmariowu/autosearch) | 需要覆盖很多来源，包括中文来源。它是搜索后端，这个 skill 可以架在它上面。 |
 
 ## 局限
 
